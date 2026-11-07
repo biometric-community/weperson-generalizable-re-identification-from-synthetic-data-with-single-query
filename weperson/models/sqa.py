@@ -63,7 +63,7 @@ def aug_samples(x: torch.Tensor, aug_n: int) -> torch.Tensor:
     trans = [
         T.ColorJitter(0.2, 0.1, 0.5),
         T.RandomHorizontalFlip(1),
-        T.RandomVerticalFlip(1),
+        T.RandomResizedCrop(tuple(x.shape[-2:]), scale=(0.6, 1.0), antialias=True),
         T.GaussianBlur(3),
         T.RandomErasing(1),
         T.RandomRotation(15),

@@ -32,8 +32,8 @@ sqa:
   lambd: 0.0051
   aug_n: 8
   steps: 1
-  w: 0.5
-  alpha: 0.9
+  w: 0.7
+  alpha: 0.95
 eval:
   batch_size: 64
   ranks: [1, 5, 10]
