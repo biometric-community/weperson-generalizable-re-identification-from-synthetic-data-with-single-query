@@ -148,10 +148,10 @@ def main(argv=None):
             metrics = run_eval(model, cfg, device)
             row.update({k: metrics[k] for k in ("mAP", "Rank-1", "Rank-5") if k in metrics})
             print(f"[eval] epoch={epoch+1} mAP={metrics['mAP']:.2f} R1={metrics['Rank-1']:.2f}", flush=True)
-            if metrics["mAP"] > best["mAP"]:
-                best = {k: metrics[k] for k in metrics if k != "cmc"}
-                best["epoch"] = epoch + 1
-                torch.save({"model": model.state_dict(), "epoch": epoch + 1, "best": best, "cfg": cfg}, ckpt_dir / "best.pt")
+            # No validation split: keep the latest checkpoint, not the best on the test set
+            best = {k: metrics[k] for k in metrics if k != "cmc"}
+            best["epoch"] = epoch + 1
+            torch.save({"model": model.state_dict(), "epoch": epoch + 1, "best": best, "cfg": cfg}, ckpt_dir / "best.pt")
         history.append(row)
         print(f"[epoch] {epoch+1}/{epochs} loss={row['loss']:.4f} lr={cur_lr:.6f} sec={row['sec']:.1f}", flush=True)
         (log_dir / "train_history.json").write_text(json.dumps(history, indent=2))
