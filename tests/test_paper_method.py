@@ -98,8 +98,15 @@ def test_single_query_moves_statistics_towards_the_target_domain():
 
 
 @pytest.mark.parametrize("key", ["lambd", "aug_n", "steps", "w", "alpha"])
-def test_sqa_settings_match_the_authors(default_cfg, targets, key):
-    assert default_cfg["sqa"][key] == targets["authors_defaults"][key]
+def test_sqa_settings_match_the_paper(default_cfg, targets, key):
+    assert default_cfg["sqa"][key] == targets["sqa_settings"][key]
+
+
+def test_augmentations_match_the_paper():
+    """Sec. V-B lists RandomResizedCrop; Sec. V-E says vertical flips distort ReID semantics."""
+    source = (ROOT / "weperson" / "models" / "sqa.py").read_text(encoding="utf-8")
+    assert "RandomResizedCrop" in source
+    assert "RandomVerticalFlip" not in source
 
 
 def rank(q_pid, q_cam, g_pids, g_cams, g_feats) -> dict:

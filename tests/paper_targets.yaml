@@ -1,16 +1,14 @@
 # Li, Ye, Su & Du, "WePerson: Generalizable Re-Identification From Synthetic Data With
 # Single Query Adaptation", IEEE TBIOM 7(3), 2025, doi:10.1109/TBIOM.2025.3540919.
-# Method references come from the authors' code, github.com/lihe404/WePerson (SQA/).
-source: https://github.com/lihe404/WePerson
+source: doi:10.1109/TBIOM.2025.3540919
 
-authors_defaults:
+# Sec. V-E uses alpha 0.95 and omega 0.7 with SQA; lambda and n follow Sec. V-B.
+sqa_settings:
   lambd: 0.0051
   aug_n: 8
   steps: 1
-  w: 0.5
-  alpha: 0.9
+  w: 0.7
+  alpha: 0.95
 
-# Fill in from the paper's tables to enable test_published_values. The paper is closed
-# access and only its abstract was available, so no values are recorded here.
-# Shape: {map: 0.0, rank1: 0.0} for Market-1501.
-published_values: null
+# Table VI, WePerson source, +SQA, Market-1501.
+published_values: {map: 59.3, rank1: 84.8}
